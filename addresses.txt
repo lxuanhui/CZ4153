@@ -1,0 +1,18 @@
+Admin Wallet Address: 0x555D9A5d9D4B407C738A410B46ABBa67Bb1215EC
+KNC Test Token: 0x115c3fbee5b45c806e048c183daf65ee4b320e50
+NFT Token: 0x60bD8916e4B903Edbe481C0cef408CaE8342a12f
+Partner Token: 0xb9A31Ff60EfB7A8C82A1DFa77035dB053176812e
+Kyber Locker: 0xBaD1497E9ceC43309d2960b4C793610D8baF1ce6
+Kyber Fairlaunch: 0xc915ad0A0feeE862C723E859eB78fC153E0A1C17
+KNC NFT TEst 1: 0x4D0603f1BFc489c4C9f18E10d6B2EE1e30C9E59A
+
+Rewards per block: [10000000000000,25000000000000]
+
+Max int: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+
+Deposit test at : 9703356  ended at : 9703398
+
+Remember to allow fairlaunch to add all tokens rwards(KNC. NFTToken) to reward locker. addRewardsContract()
+
+uint256 callData cause overflow after 14 digits
+to solve(use a hex string) web3js can not support too many 0s

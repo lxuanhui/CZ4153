@@ -1,0 +1,863 @@
+{
+	"compiler": {
+		"version": "0.7.6+commit.7338295f"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_admin",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "previousAdmin",
+						"type": "address"
+					}
+				],
+				"name": "AdminClaimed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "rewardContract",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "isAdded",
+						"type": "bool"
+					}
+				],
+				"name": "RewardContractAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint64",
+						"name": "vestingDuration",
+						"type": "uint64"
+					}
+				],
+				"name": "SetVestingDuration",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "pendingAdmin",
+						"type": "address"
+					}
+				],
+				"name": "TransferAdminPending",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "beneficiary",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "vestedQuantity",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "Vested",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "beneficiary",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "startBlock",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "endBlock",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "VestingEntryCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "beneficiary",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					}
+				],
+				"name": "VestingEntryQueued",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "accountEscrowedBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "accountVestedBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_rewardContract",
+						"type": "address"
+					}
+				],
+				"name": "addRewardsContract",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "admin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "claimAdmin",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					}
+				],
+				"name": "getRewardContractsPerToken",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "rewardContracts",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "getVestingScheduleAtIndex",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint64",
+								"name": "startBlock",
+								"type": "uint64"
+							},
+							{
+								"internalType": "uint64",
+								"name": "endBlock",
+								"type": "uint64"
+							},
+							{
+								"internalType": "uint128",
+								"name": "quantity",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "vestedQuantity",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct IKyberRewardLocker.VestingSchedule",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					}
+				],
+				"name": "getVestingSchedules",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint64",
+								"name": "startBlock",
+								"type": "uint64"
+							},
+							{
+								"internalType": "uint64",
+								"name": "endBlock",
+								"type": "uint64"
+							},
+							{
+								"internalType": "uint128",
+								"name": "quantity",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "vestedQuantity",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct IKyberRewardLocker.VestingSchedule[]",
+						"name": "schedules",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					}
+				],
+				"name": "lock",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "startBlock",
+						"type": "uint256"
+					}
+				],
+				"name": "lockWithStartBlock",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					}
+				],
+				"name": "numVestingSchedules",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pendingAdmin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_rewardContract",
+						"type": "address"
+					}
+				],
+				"name": "removeRewardsContract",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint64",
+						"name": "_vestingDuration",
+						"type": "uint64"
+					}
+				],
+				"name": "setVestingDuration",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "transferAdmin",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "transferAdminQuickly",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					}
+				],
+				"name": "vestCompletedSchedules",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext[]",
+						"name": "tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "vestCompletedSchedulesForMultipleTokens",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "vestedAmounts",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "indexes",
+						"type": "uint256[]"
+					}
+				],
+				"name": "vestScheduleAtIndices",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext[]",
+						"name": "tokens",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256[][]",
+						"name": "indices",
+						"type": "uint256[][]"
+					}
+				],
+				"name": "vestScheduleForMultipleTokensAtIndices",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "vestedAmounts",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "startIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "endIndex",
+						"type": "uint256"
+					}
+				],
+				"name": "vestSchedulesInRange",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20Ext",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "vestingDurationPerToken",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"claimAdmin()": {
+					"details": "Allows the pendingAdmin address to finalize the change admin process."
+				},
+				"getVestingScheduleAtIndex(address,address,uint256)": {
+					"details": "manually get vesting schedule at index"
+				},
+				"getVestingSchedules(address,address)": {
+					"details": "Get all schedules for an account."
+				},
+				"lockWithStartBlock(address,address,uint256,uint256)": {
+					"details": "queue a vesting schedule"
+				},
+				"transferAdmin(address)": {
+					"details": "Allows the current admin to set the pendingAdmin address.",
+					"params": {
+						"newAdmin": "The address to transfer ownership to."
+					}
+				},
+				"transferAdminQuickly(address)": {
+					"details": "Allows the current admin to set the admin in one tx. Useful initial deployment.",
+					"params": {
+						"newAdmin": "The address to transfer ownership to."
+					}
+				},
+				"vestCompletedSchedules(address)": {
+					"details": "Allow a user to vest all ended schedules"
+				},
+				"vestCompletedSchedulesForMultipleTokens(address[])": {
+					"details": "vest all completed schedules for multiple tokens"
+				},
+				"vestScheduleForMultipleTokensAtIndices(address[],uint256[][])": {
+					"details": "claim multiple tokens for specific vesting schedule,      if schedule has not ended yet, claiming amounts are linear with vesting blocks"
+				},
+				"vestSchedulesInRange(address,uint256,uint256)": {
+					"details": "claim token for specific vesting schedule from startIndex to endIndex"
+				}
+			},
+			"stateVariables": {
+				"accountEscrowedBalance": {
+					"details": "An account's total escrowed balance per token to save recomputing this for fee extraction purposes"
+				},
+				"accountVestedBalance": {
+					"details": "An account's total vested reward per token"
+				},
+				"accountVestingSchedules": {
+					"details": "vesting schedule of an account"
+				},
+				"rewardContractsPerToken": {
+					"details": "whitelist of reward contracts"
+				},
+				"vestingDurationPerToken": {
+					"details": "vesting duration for earch token"
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"addRewardsContract(address,address)": {
+					"notice": "Add a whitelisted rewards contract"
+				},
+				"numVestingSchedules(address,address)": {
+					"notice": "The number of vesting dates in an account's schedule."
+				},
+				"removeRewardsContract(address,address)": {
+					"notice": "Remove a whitelisted rewards contract"
+				},
+				"vestScheduleAtIndices(address,uint256[])": {
+					"notice": "Allow a user to vest with specific schedule"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/KyberRewardLocker.sol": "KyberRewardLocker"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/math/SafeMath.sol": {
+			"keccak256": "0xba96bc371ba999f452985a98717cca1e4c4abb598dc038a9a9c3db08129b1ba4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://26e50e3f7b6482fb6f598f2e006994a74aa492687daa4b3eee7fd4fb5398ce7f",
+				"dweb:/ipfs/QmZudqoPSkA4USLMFsBBmt19dDPZFS8aaAmL5R7pECXu6t"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0xbd74f587ab9b9711801baf667db1426e4a03fd2d7f15af33e0e0d0394e7cef76",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2d0913dfbfce90d170df0d496ad7596c0778518e5fa7aba6c32562522546f66b",
+				"dweb:/ipfs/QmR6B8nLj2PJf5e1JWD9Nk7ErkAwkqUwadCnvE82FJr1RU"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/SafeERC20.sol": {
+			"keccak256": "0xc77dd6233a82c7c6e3dc49da8f3456baa00ecd3ea4dfa9222002a9aebf155dcd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8e5f78a5b3e707177aa47371e008a54b83dbd28a52055d1746534502b010c21b",
+				"dweb:/ipfs/Qmeqfky5DvkMZZY3RtP6kYhFD5bZrPAMVPbqkwWhoUjZ3u"
+			]
+		},
+		"@openzeppelin/contracts/utils/Address.sol": {
+			"keccak256": "0x698f929f1097637d051976b322a2d532c27df022b09010e8d091e2888a5ebdf8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4bd4c9419d1182612ef415c60a83a9039b227fccb799937963448114c0473b58",
+				"dweb:/ipfs/Qmat1U571v55F5JDDHHX7igGcmLF8Ehk9CzsWpjbdx3RTH"
+			]
+		},
+		"@openzeppelin/contracts/utils/EnumerableSet.sol": {
+			"keccak256": "0x5420cb92cf72960b0be9dacec46b15a5558f89688d846cc6e53ec1c2d807f673",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f6dd826d43bc5d033e6197236f8b55e56dfdda6d1a364f5ddfa79c134a664875",
+				"dweb:/ipfs/Qmcztt4dk38dzvUtDQoJrnWNvafotNRttyah1zRVmsNyB6"
+			]
+		},
+		"@openzeppelin/contracts/utils/SafeCast.sol": {
+			"keccak256": "0x79004a1d1471abe87e92c4497acba06d5dfa5b1f3e9894a0991a7c4669c5c02c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ba66ab47a94a8c5500fc6370634d1a45a72ee51d54095912a23eeefd71a68f61",
+				"dweb:/ipfs/QmaDC549hugot25fA4XYieSFLqVUbxLubeJCw61sFEAKnQ"
+			]
+		},
+		"contracts/KyberRewardLocker.sol": {
+			"keccak256": "0x43068f6c48c2dd31bd38e3cc9d4d903d26ad915699fd21adffcb08acc13ad847",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://6d099096d788730d0b5ee245bcd9fefce3355d25403c11197c595f95f3c602ed",
+				"dweb:/ipfs/QmQZ8vHeobN8B2xNiDcc4qwFcMWeUJxFM7kSHPiRzU6cF8"
+			]
+		},
+		"contracts/kybernetwork/utils-sc/contracts/IERC20Ext.sol": {
+			"keccak256": "0x7e23560b213741b6efca6d7bc7e08cf2b09ffef9b858fc8f35d2faca20ca3b00",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://91b7808963c48303af23e05f026ad32372104f215cd185536c5fd05605432c24",
+				"dweb:/ipfs/QmSV2yzQM56gEB9WFW1TURo6yxvDcfe7kKLAzUJFhqKVUb"
+			]
+		},
+		"contracts/kybernetwork/utils-sc/contracts/PermissionAdmin.sol": {
+			"keccak256": "0xbaed10c9962125d363966069ced611ee69c1536ce2834fa8e80d4b43bc707853",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7e5e999555963fd2ab7e698ce89f1440d9d16fe43ee90d1f4df2d5ac450e7d00",
+				"dweb:/ipfs/QmbxqM9gv4ouBGMFANuZTCgsMuvM9b1HCFEegXjXpivrNJ"
+			]
+		},
+		"interfaces/liquidityMining/IKyberRewardLocker.sol": {
+			"keccak256": "0x79027d22694ccbfbc7885b872385f4c5492352ce01684bcffe11e34232bee187",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://f9ed81645d55246f52b7a8ce407c074b46d82a132717daaae4a63bc420b35eb3",
+				"dweb:/ipfs/QmVFkz1joEX8FF99V5Y2eMvjTJMu3BdXcyT5vo6eeEqwWv"
+			]
+		}
+	},
+	"version": 1
+}

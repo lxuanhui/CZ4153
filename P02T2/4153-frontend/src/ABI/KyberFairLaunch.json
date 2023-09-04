@@ -1,0 +1,956 @@
+{
+	"compiler": {
+		"version": "0.7.6+commit.7338295f"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_admin",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_rewardTokens",
+						"type": "address[]"
+					},
+					{
+						"internalType": "contract IKyberRewardLocker",
+						"name": "_rewardLocker",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "stakeToken",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint32",
+						"name": "startBlock",
+						"type": "uint32"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint32",
+						"name": "endBlock",
+						"type": "uint32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256[]",
+						"name": "rewardPerBlocks",
+						"type": "uint256[]"
+					}
+				],
+				"name": "AddNewPool",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "previousAdmin",
+						"type": "address"
+					}
+				],
+				"name": "AdminClaimed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "pid",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "blockNumber",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Deposit",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "pid",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "blockNumber",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "EmergencyWithdraw",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "pid",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "rewardToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "lockedAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "blockNumber",
+						"type": "uint256"
+					}
+				],
+				"name": "Harvest",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "pid",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint32",
+						"name": "startBlock",
+						"type": "uint32"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint32",
+						"name": "endBlock",
+						"type": "uint32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256[]",
+						"name": "rewardPerBlocks",
+						"type": "uint256[]"
+					}
+				],
+				"name": "RenewPool",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "pendingAdmin",
+						"type": "address"
+					}
+				],
+				"name": "TransferAdminPending",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "pid",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint32",
+						"name": "endBlock",
+						"type": "uint32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256[]",
+						"name": "rewardPerBlocks",
+						"type": "uint256[]"
+					}
+				],
+				"name": "UpdatePool",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "pid",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "blockNumber",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Withdraw",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_stakeToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint32",
+						"name": "_startBlock",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "_endBlock",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "_rewardPerBlocks",
+						"type": "uint256[]"
+					}
+				],
+				"name": "addPool",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "admin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "rewardTokenIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "adminWithdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "claimAdmin",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "_shouldHarvest",
+						"type": "bool"
+					}
+				],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					}
+				],
+				"name": "emergencyWithdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					}
+				],
+				"name": "getPoolInfo",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "totalStake",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "stakeToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint32",
+						"name": "startBlock",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "endBlock",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "lastRewardBlock",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "rewardPerBlocks",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "accRewardPerShares",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getRewardTokens",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					}
+				],
+				"name": "getUserInfo",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "unclaimedRewards",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "lastRewardPerShares",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					}
+				],
+				"name": "harvest",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "_pids",
+						"type": "uint256[]"
+					}
+				],
+				"name": "harvestMultiplePools",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pendingAdmin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					}
+				],
+				"name": "pendingRewards",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "rewards",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "poolExists",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "poolLength",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint32",
+						"name": "_startBlock",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "_endBlock",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "_rewardPerBlocks",
+						"type": "uint256[]"
+					}
+				],
+				"name": "renewPool",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rewardLocker",
+				"outputs": [
+					{
+						"internalType": "contract IKyberRewardLocker",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "rewardTokens",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "transferAdmin",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "transferAdminQuickly",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint32",
+						"name": "_endBlock",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "_rewardPerBlocks",
+						"type": "uint256[]"
+					}
+				],
+				"name": "updatePool",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					}
+				],
+				"name": "updatePoolRewards",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"addPool(address,uint32,uint32,uint256[])": {
+					"details": "Add a new lp to the pool. Can only be called by the admin.",
+					"params": {
+						"_endBlock": ": block where the reward ends",
+						"_rewardPerBlocks": ": amount of reward token per block for the pool for each reward token",
+						"_stakeToken": ": token to be staked to the pool",
+						"_startBlock": ": block where the reward starts"
+					}
+				},
+				"adminWithdraw(uint256,uint256)": {
+					"details": "Allow admin to withdraw only reward tokens"
+				},
+				"claimAdmin()": {
+					"details": "Allows the pendingAdmin address to finalize the change admin process."
+				},
+				"deposit(uint256,uint256,bool)": {
+					"details": "Deposit tokens to accumulate rewards",
+					"params": {
+						"_amount": ": amount of stakeToken to be deposited",
+						"_pid": ": id of the pool",
+						"_shouldHarvest": ": whether to harvest the reward or not"
+					}
+				},
+				"emergencyWithdraw(uint256)": {
+					"details": "Emergency withdrawal function to allow withdraw all deposited tokens (of the sender)   and reset all rewards",
+					"params": {
+						"_pid": ": id of the pool"
+					}
+				},
+				"getPoolInfo(uint256)": {
+					"details": "Return full details of a pool"
+				},
+				"getRewardTokens()": {
+					"details": "Return list reward tokens"
+				},
+				"getUserInfo(uint256,address)": {
+					"details": "Return user's info including deposited amount and reward data"
+				},
+				"harvest(uint256)": {
+					"details": "Harvest rewards from a pool for the sender",
+					"params": {
+						"_pid": ": id of the pool"
+					}
+				},
+				"harvestMultiplePools(uint256[])": {
+					"details": "Harvest rewards from multiple pools for the sender   combine rewards from all pools and only transfer once to save gas"
+				},
+				"pendingRewards(uint256,address)": {
+					"details": "Get pending rewards of a user from a pool, mostly for front-end",
+					"params": {
+						"_pid": ": id of the pool",
+						"_user": ": user to check for pending rewards"
+					}
+				},
+				"renewPool(uint256,uint32,uint32,uint256[])": {
+					"details": "Renew a pool to start another liquidity mining program",
+					"params": {
+						"_endBlock": ": block where the reward ends",
+						"_pid": ": id of the pool to renew, must be pool that has not started or already ended",
+						"_rewardPerBlocks": ": amount of reward token per block for the pool   0 if we want to stop the pool from accumulating rewards",
+						"_startBlock": ": block where the reward starts"
+					}
+				},
+				"transferAdmin(address)": {
+					"details": "Allows the current admin to set the pendingAdmin address.",
+					"params": {
+						"newAdmin": "The address to transfer ownership to."
+					}
+				},
+				"transferAdminQuickly(address)": {
+					"details": "Allows the current admin to set the admin in one tx. Useful initial deployment.",
+					"params": {
+						"newAdmin": "The address to transfer ownership to."
+					}
+				},
+				"updatePool(uint256,uint32,uint256[])": {
+					"details": "Update a pool, allow to change end block, reward per block",
+					"params": {
+						"_endBlock": ": block where the reward ends",
+						"_pid": ": pool id to be renew",
+						"_rewardPerBlocks": ": amount of reward token per block for the pool,   0 if we want to stop the pool from accumulating rewards"
+					}
+				},
+				"updatePoolRewards(uint256)": {
+					"details": "Update rewards for one pool"
+				},
+				"withdraw(uint256,uint256)": {
+					"details": "Withdraw token (of the sender) from pool, also harvest rewards",
+					"params": {
+						"_amount": ": amount of stakeToken to withdraw",
+						"_pid": ": id of the pool"
+					}
+				},
+				"withdrawAll(uint256)": {
+					"details": "Withdraw all tokens (of the sender) from pool, also harvest reward",
+					"params": {
+						"_pid": ": id of the pool"
+					}
+				}
+			},
+			"stateVariables": {
+				"poolLength": {
+					"details": "return the total of pools that have been added"
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"emergencyWithdraw(uint256)": {
+					"notice": "EMERGENCY USAGE ONLY, USER'S REWARDS WILL BE RESET"
+				}
+			},
+			"notice": "FairLaunch contract for Kyber DMM Liquidity Mining program Allow stakers to stake LP tokens and receive reward tokens Allow extend or renew a pool to continue/restart the LM program When harvesting, rewards will be transferred to a RewardLocker Support multiple reward tokens, reward tokens must be distinct and immutable",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/KyberFairLaunch.sol": "KyberFairLaunch"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/math/SafeMath.sol": {
+			"keccak256": "0xba96bc371ba999f452985a98717cca1e4c4abb598dc038a9a9c3db08129b1ba4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://26e50e3f7b6482fb6f598f2e006994a74aa492687daa4b3eee7fd4fb5398ce7f",
+				"dweb:/ipfs/QmZudqoPSkA4USLMFsBBmt19dDPZFS8aaAmL5R7pECXu6t"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0xbd74f587ab9b9711801baf667db1426e4a03fd2d7f15af33e0e0d0394e7cef76",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2d0913dfbfce90d170df0d496ad7596c0778518e5fa7aba6c32562522546f66b",
+				"dweb:/ipfs/QmR6B8nLj2PJf5e1JWD9Nk7ErkAwkqUwadCnvE82FJr1RU"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/SafeERC20.sol": {
+			"keccak256": "0xc77dd6233a82c7c6e3dc49da8f3456baa00ecd3ea4dfa9222002a9aebf155dcd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8e5f78a5b3e707177aa47371e008a54b83dbd28a52055d1746534502b010c21b",
+				"dweb:/ipfs/Qmeqfky5DvkMZZY3RtP6kYhFD5bZrPAMVPbqkwWhoUjZ3u"
+			]
+		},
+		"@openzeppelin/contracts/utils/Address.sol": {
+			"keccak256": "0x698f929f1097637d051976b322a2d532c27df022b09010e8d091e2888a5ebdf8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4bd4c9419d1182612ef415c60a83a9039b227fccb799937963448114c0473b58",
+				"dweb:/ipfs/Qmat1U571v55F5JDDHHX7igGcmLF8Ehk9CzsWpjbdx3RTH"
+			]
+		},
+		"@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+			"keccak256": "0x938f2783ceb543ad266344cc5c420e1294026507081d6b7c2ec01b3303056265",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://66862371edb359d944e19a6f78b99e0f23217ec59870f30528b4f412317469a6",
+				"dweb:/ipfs/Qmdoswyk5m24pywb98H8SUyjZ2M3HLcuVMMEYskfpn5rAL"
+			]
+		},
+		"@openzeppelin/contracts/utils/SafeCast.sol": {
+			"keccak256": "0x79004a1d1471abe87e92c4497acba06d5dfa5b1f3e9894a0991a7c4669c5c02c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ba66ab47a94a8c5500fc6370634d1a45a72ee51d54095912a23eeefd71a68f61",
+				"dweb:/ipfs/QmaDC549hugot25fA4XYieSFLqVUbxLubeJCw61sFEAKnQ"
+			]
+		},
+		"contracts/KyberFairLaunch.sol": {
+			"keccak256": "0xbe9190d7ef5c1335d239f2d21853fe6034d8c300fbba093aea5dd0f4cf505f9c",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://239603b03e8c0867efbbb6b2d3dab143dc53c85bd4e0b5cd7e86f973eff3c3bc",
+				"dweb:/ipfs/QmaNhiT9e3PFbHJLQ2nJ2HEFho612ghw1KZeLtvnMbMxDN"
+			]
+		},
+		"contracts/kybernetwork/utils-sc/contracts/IERC20Ext.sol": {
+			"keccak256": "0x7e23560b213741b6efca6d7bc7e08cf2b09ffef9b858fc8f35d2faca20ca3b00",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://91b7808963c48303af23e05f026ad32372104f215cd185536c5fd05605432c24",
+				"dweb:/ipfs/QmSV2yzQM56gEB9WFW1TURo6yxvDcfe7kKLAzUJFhqKVUb"
+			]
+		},
+		"contracts/kybernetwork/utils-sc/contracts/PermissionAdmin.sol": {
+			"keccak256": "0xbaed10c9962125d363966069ced611ee69c1536ce2834fa8e80d4b43bc707853",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7e5e999555963fd2ab7e698ce89f1440d9d16fe43ee90d1f4df2d5ac450e7d00",
+				"dweb:/ipfs/QmbxqM9gv4ouBGMFANuZTCgsMuvM9b1HCFEegXjXpivrNJ"
+			]
+		},
+		"interfaces/liquidityMining/IKyberFairLaunch.sol": {
+			"keccak256": "0x2431a0fd5ea8873a6b54c1a92331a3afe3a9786837f9fa5807c7e587549ca2de",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://23dbbdc77ff74fb6b45bfffaed9e378da8d88437953d823fe5d2c4925ed5d205",
+				"dweb:/ipfs/QmYZhHfXJ1h5fjd6fM73mRYPyGSY5oT5zoEuHm9QDq7i8t"
+			]
+		},
+		"interfaces/liquidityMining/IKyberRewardLocker.sol": {
+			"keccak256": "0x79027d22694ccbfbc7885b872385f4c5492352ce01684bcffe11e34232bee187",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://f9ed81645d55246f52b7a8ce407c074b46d82a132717daaae4a63bc420b35eb3",
+				"dweb:/ipfs/QmVFkz1joEX8FF99V5Y2eMvjTJMu3BdXcyT5vo6eeEqwWv"
+			]
+		}
+	},
+	"version": 1
+}
