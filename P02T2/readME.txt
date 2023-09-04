@@ -1,6 +1,6 @@
 Spare Wallet to use: 
 Address: 0x7B86ee786f7BFA86269cFca34bfa49EF21c11128
-Private key : ee549c7d9a8e5523a654bd2eb4bd75028fb3c535157d7d3c93aabc293b12df54
+
 
 -- For Smart Contract for Remix --
 1) remixd.zip - extract to AppData/npm
